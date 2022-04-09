@@ -79,7 +79,7 @@ const SignupPage = () => {
           </Button>
           <Space h="xs" />
           <Text>
-            Jau turite paskyrą ? Prisijunkite <Anchor href="/login">čia</Anchor>
+            Jau turite paskyrą ? Prisijunkite <Anchor href="/users/login">čia</Anchor>
           </Text>
           <Space h="xs" />
           {isLoading && <CustomLoader />}
