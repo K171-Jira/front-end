@@ -1,13 +1,16 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Form from './Form';
+import SignupPage from './registerForm/SignupPage';
+import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <div className="App">
-      <Form />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <SignupPage />
+    </QueryClientProvider>
   );
 }
 
