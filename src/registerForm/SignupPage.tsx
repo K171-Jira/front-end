@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from '@mantine/form';
 import SignupData from './SignupData';
-import { TextInput, Button, Box, Title, Space, Text, Anchor, Alert } from '@mantine/core';
+import { TextInput, Button, Box, Title, Space, Text, Anchor, Alert, PasswordInput } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form/lib/use-form';
 import AuthService from './AuthService';
 import { useMutation, useQueryClient } from 'react-query';
@@ -51,13 +51,13 @@ const SignupPage = () => {
             placeholder="vardas@puslapis.lt"
             {...form.getInputProps('email')}
           />
-          <TextInput
+          <PasswordInput
             required
             label="Slaptažodis"
             placeholder="Slaptažodis"
             {...form.getInputProps('password')}
           />
-          <TextInput
+          <PasswordInput
             required
             label="Patvirtinti slaptažodį"
             placeholder="Slaptažodis"
