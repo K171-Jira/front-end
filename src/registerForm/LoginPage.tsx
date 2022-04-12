@@ -24,14 +24,8 @@ const LoginPage = () => {
 
     const { mutate, isLoading, error, isError } = useMutation(AuthService.login, {
         onSuccess: (data) => {
-          console.log(data);
-          const message = 'User Logged in Successfully';
-          alert(message);
         },
         onError: (err: any) => {},
-        onSettled: () => {
-          queryClient.invalidateQueries('create');
-        },
     });
 
     return (
