@@ -1,12 +1,24 @@
 import React from 'react';
 import { useForm } from '@mantine/form';
 import SignupData from './SignupData';
-import { TextInput, Button, Box, Title, Space, Text, Anchor, Alert, PasswordInput } from '@mantine/core';
+import {
+  TextInput,
+  Button,
+  Box,
+  Title,
+  Space,
+  Text,
+  Anchor,
+  Alert,
+  Card,
+  Loader,
+  Center,
+} from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form/lib/use-form';
 import AuthService from './AuthService';
 import { useMutation, useQueryClient } from 'react-query';
 import { FiAlertTriangle } from 'react-icons/fi';
-import CustomLoader from '../common/CustomLoader';
+import '../common/Loader.scss';
 
 const SignupPage = () => {
   const queryClient = useQueryClient();
@@ -39,57 +51,79 @@ const SignupPage = () => {
       queryClient.invalidateQueries('create');
     },
   });
-
   return (
     <div className="form-content-right">
       <form className="form" onSubmit={form.onSubmit((values: any) => console.log(values))}>
-        <Box sx={{ maxWidth: 300 }} mx="auto">
-          <Title order={1}>Sign up</Title>
-          <TextInput
-            required
-            label="El. paštas"
-            placeholder="vardas@puslapis.lt"
-            {...form.getInputProps('email')}
-          />
-          <PasswordInput
-            required
-            label="Slaptažodis"
-            placeholder="Slaptažodis"
-            {...form.getInputProps('password')}
-          />
-          <PasswordInput
-            required
-            label="Patvirtinti slaptažodį"
-            placeholder="Slaptažodis"
-            {...form.getInputProps('confirmPassword')}
-          />
-          <TextInput required label="Vardas" placeholder="Vardas" {...form.getInputProps('firstName')} />
-          <TextInput required label="Pavardė" placeholder="Pavardė" {...form.getInputProps('lastName')} />
-          <Button
-            variant="outline"
-            color="lime"
-            radius="xl"
-            size="md"
-            style={{ marginTop: 20 }}
-            onClick={() => {
-              mutate(form.values);
-            }}
-          >
-            Prisijungti
-          </Button>
-          <Space h="xs" />
-          <Text>
-            Jau turite paskyrą ? Prisijunkite <Anchor href="/users/login">čia</Anchor>
-          </Text>
-          <Space h="xs" />
-          {isLoading && <CustomLoader />}
-          <Space h="xs" />
-          {isError && (
-            <Alert icon={<FiAlertTriangle />} title="Šventi kopūstai!" color="red" radius="md">
-              {error.response?.data.message}
-            </Alert>
-          )}
-        </Box>
+        {isLoading ? (
+          <Card shadow="xl" p="md" sx={{ maxWidth: 350, height: '56vh', marginTop: 100 }} mx="auto">
+            <Center sx={{ height: '50vh' }}>
+              <Loader sx={{}} color="lime" size={80} variant="bars" />
+            </Center>
+          </Card>
+        ) : (
+          <Card shadow="xl" p="md" sx={{ maxWidth: 350, marginTop: 100 }} mx="auto">
+            <Title order={1}>Registracija</Title>
+            <Space h="xs" />
+            <TextInput
+              required
+              variant="filled"
+              label="El. paštas"
+              placeholder="vardas@puslapis.lt"
+              {...form.getInputProps('email')}
+            />
+            <TextInput
+              required
+              variant="filled"
+              label="Slaptažodis"
+              placeholder="Slaptažodis"
+              {...form.getInputProps('password')}
+            />
+            <TextInput
+              required
+              variant="filled"
+              label="Patvirtinti slaptažodį"
+              placeholder="Slaptažodis"
+              {...form.getInputProps('confirmPassword')}
+            />
+            <TextInput
+              required
+              variant="filled"
+              label="Vardas"
+              placeholder="Vardas"
+              {...form.getInputProps('firstName')}
+            />
+            <TextInput
+              required
+              variant="filled"
+              label="Pavardė"
+              placeholder="Pavardė"
+              {...form.getInputProps('lastName')}
+            />
+            <Button
+              variant="outline"
+              color="lime"
+              radius="xl"
+              size="md"
+              style={{ marginTop: 20 }}
+              onClick={() => {
+                mutate(form.values);
+              }}
+            >
+              Prisijungti
+            </Button>
+            <Space h="xs" />
+            <Text>
+              Jau turite paskyrą ? Prisijunkite <Anchor href="/users/login">čia</Anchor>
+            </Text>
+            <Space h="xs" />
+            <Space h="xs" />
+            {isError && (
+              <Alert icon={<FiAlertTriangle />} title="Kažkas nepavyko!" color="red" radius="md">
+                {error.response?.data.message}
+              </Alert>
+            )}
+          </Card>
+        )}
       </form>
     </div>
   );
