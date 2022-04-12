@@ -22,7 +22,6 @@ const LoginPage = () => {
       },
     });
 
-    //Pakeisti---------------------------------------------
     const { mutate, isLoading, error, isError } = useMutation(AuthService.login, {
         onSuccess: (data) => {
           console.log(data);
@@ -34,7 +33,6 @@ const LoginPage = () => {
           queryClient.invalidateQueries('create');
         },
     });
-    //-----------------------------------------------------
 
     return (
         <div className="form-content-right">
@@ -65,10 +63,6 @@ const LoginPage = () => {
               >
                 Prisijungti
               </Button>
-              {/* <Space h="xs" />
-              <Text>
-                Jau turite paskyrą ? Prisijunkite <Anchor href="/users/login">čia</Anchor>
-              </Text> */}
               <Space h="xs" />
               {isLoading && <CustomLoader />}
               <Space h="xs" />
