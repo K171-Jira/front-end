@@ -4,7 +4,6 @@ import SignupData from './SignupData';
 import {
   TextInput,
   Button,
-  Box,
   Title,
   Space,
   Text,
@@ -13,15 +12,17 @@ import {
   Card,
   Loader,
   Center,
+  Container,
+  PasswordInput,
 } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form/lib/use-form';
 import AuthService from './AuthService';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { FiAlertTriangle } from 'react-icons/fi';
-import '../common/Loader.scss';
+import { useNavigate } from 'react-router-dom';
 
 const SignupPage = () => {
-  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const form: UseFormReturnType<SignupData> = useForm({
     initialValues: new SignupData({
       email: '',
@@ -41,29 +42,23 @@ const SignupPage = () => {
   });
 
   const { mutate, isLoading, error, isError } = useMutation(AuthService.signup, {
-    onSuccess: (data) => {
-      console.log(data);
-      const message = 'User Registered Successfully';
-      alert(message);
+    onSuccess: () => {
+      navigate('/masks');
     },
     onError: (err: any) => {},
-    onSettled: () => {
-      queryClient.invalidateQueries('create');
-    },
   });
+
   return (
-    <div className="form-content-right">
-      <form className="form" onSubmit={form.onSubmit((values: any) => console.log(values))}>
+    <Container style={{ marginTop: '100px' }}>
+      <Card shadow="xl" p="md" sx={{ maxWidth: 400 }} mx="auto" withBorder>
         {isLoading ? (
-          <Card shadow="xl" p="md" sx={{ maxWidth: 350, height: '56vh', marginTop: 100 }} mx="auto">
-            <Center sx={{ height: '50vh' }}>
-              <Loader sx={{}} color="lime" size={80} variant="bars" />
-            </Center>
-          </Card>
+          <Center sx={{ height: '50vh' }}>
+            <Loader color="lime" size={80} variant="bars" />
+          </Center>
         ) : (
-          <Card shadow="xl" p="md" sx={{ maxWidth: 350, marginTop: 100 }} mx="auto">
+          <form className="form" onSubmit={form.onSubmit((values: any) => console.log(values))}>
             <Title order={1}>Registracija</Title>
-            <Space h="xs" />
+            <Space h="md" />
             <TextInput
               required
               variant="filled"
@@ -71,14 +66,14 @@ const SignupPage = () => {
               placeholder="vardas@puslapis.lt"
               {...form.getInputProps('email')}
             />
-            <TextInput
+            <PasswordInput
               required
               variant="filled"
               label="Slaptažodis"
               placeholder="Slaptažodis"
               {...form.getInputProps('password')}
             />
-            <TextInput
+            <PasswordInput
               required
               variant="filled"
               label="Patvirtinti slaptažodį"
@@ -109,23 +104,22 @@ const SignupPage = () => {
                 mutate(form.values);
               }}
             >
-              Prisijungti
+              Registruotis
             </Button>
             <Space h="xs" />
             <Text>
               Jau turite paskyrą ? Prisijunkite <Anchor href="/users/login">čia</Anchor>
             </Text>
-            <Space h="xs" />
-            <Space h="xs" />
+            <Space h="md" />
             {isError && (
               <Alert icon={<FiAlertTriangle />} title="Kažkas nepavyko!" color="red" radius="md">
-                {error.response?.data.message}
+                {error?.response.data.message}
               </Alert>
             )}
-          </Card>
+          </form>
         )}
-      </form>
-    </div>
+      </Card>
+    </Container>
   );
 };
 export default SignupPage;
