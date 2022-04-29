@@ -8,13 +8,15 @@ function Map() {
   return <GoogleMap defaultZoom={12} defaultCenter={{ lat: 54.8985, lng: 23.9036 }} />;
 }
 
+const { REACT_APP_GOOGLE_KEY } = process.env;
+
 const WrappedMap = withScriptjs(withGoogleMap(Map));
 
 export default function MapComponent() {
   return (
     <Box style={{ width: '80vw', height: '70vh', margin: '0 auto' }}>
       <WrappedMap
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDtztCf2KWCjaqn1B20KNCfZfsHpyWyZgQ`}
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${REACT_APP_GOOGLE_KEY}`}
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `100%` }} />}
         mapElement={<div style={{ height: `100%` }} />}

@@ -12,6 +12,8 @@ import MapComponent from './map/MapComponent';
 import { Wrapper, Status } from '@googlemaps/react-wrapper';
 
 const queryClient = new QueryClient();
+const { REACT_APP_GOOGLE_KEY } = process.env;
+console.log(REACT_APP_GOOGLE_KEY);
 
 function App() {
   const render = (status: Status) => {
@@ -27,7 +29,7 @@ function App() {
         <Route
           path="/map"
           element={
-            <Wrapper apiKey={'AIzaSyDtztCf2KWCjaqn1B20KNCfZfsHpyWyZgQ'} render={render}>
+            <Wrapper apiKey={`${REACT_APP_GOOGLE_KEY}`} render={render}>
               <MapComponent />
             </Wrapper>
           }
