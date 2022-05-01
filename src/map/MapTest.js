@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { withGoogleMap, withScriptjs, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import MapStyles from './MapStyles';
+import { Title, Box, Text } from '@mantine/core';
 
-const parkData = [
+const maskPointData = [
   {
-    address: 'Kažkur savanoriuose',
+    address: 'Jeruzalės skg. 11',
     description: '2 rūšiavimo aparatai',
     lat: 54.8986,
     lng: 23.9031,
   },
   {
-    address: 'Lelija mano',
+    address: 'Taikos pr. 32',
     description: '1 rūšiavimo aparatas',
-    lat: 54.8998,
-    lng: 23.904,
+    lat: 54.91119075263983,
+    lng: 23.94596620457446,
   },
 ];
 
 function Map() {
-  const [selectedPark, setSelectedMaskPoint] = useState(null);
+  const [selectedMaskPoint, setSelectedMaskPoint] = useState(null);
 
   useEffect(() => {
     const listener = (e) => {
@@ -37,9 +38,9 @@ function Map() {
     <GoogleMap
       defaultZoom={12}
       defaultCenter={{ lat: 54.8985, lng: 23.9036 }}
-      //defaultOptions={{ styles: MapStyles }}
+      defaultOptions={{ styles: MapStyles }}
     >
-      {parkData.map((maskPoint) => (
+      {maskPointData.map((maskPoint) => (
         <Marker
           key={maskPoint.address}
           position={{
@@ -56,20 +57,22 @@ function Map() {
         />
       ))}
 
-      {selectedPark && (
+      {selectedMaskPoint && (
         <InfoWindow
           onCloseClick={() => {
             setSelectedMaskPoint(null);
           }}
           position={{
-            lat: selectedPark.lat,
-            lng: selectedPark.lng,
+            lat: selectedMaskPoint.lat,
+            lng: selectedMaskPoint.lng,
           }}
         >
-          <div>
-            <h2>{selectedPark.address}</h2>
-            <p>{selectedPark.description}</p>
-          </div>
+          <Box>
+            <Title order={3}>{selectedMaskPoint.address}</Title>
+            <Text color="dimmed" size="lg">
+              {selectedMaskPoint.description}
+            </Text>
+          </Box>
         </InfoWindow>
       )}
     </GoogleMap>
@@ -78,9 +81,7 @@ function Map() {
 
 const MapWrapped = withScriptjs(withGoogleMap(Map));
 
-export default function MapTest() {
-  console.log(parkData);
-  console.table(parkData);
+export default function MaskMap() {
   return (
     <div style={{ width: '80vw', height: '70vh', margin: '0 auto' }}>
       <MapWrapped
