@@ -20,10 +20,37 @@ export default function MapComponent() {
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `100%` }} />}
         mapElement={<div style={{ height: `100%` }} />}
-      />
+      >
+        <Marker position={{ lat: 54.8985, lng: 23.9036 }} />
+      </WrappedMap>
     </Box>
   );
 }
+
+const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
+  const [marker, setMarker] = React.useState<google.maps.Marker>();
+
+  React.useEffect(() => {
+    if (!marker) {
+      setMarker(new google.maps.Marker());
+    }
+
+    // remove marker from map on unmount
+    return () => {
+      if (marker) {
+        marker.setMap(null);
+      }
+    };
+  }, [marker]);
+
+  React.useEffect(() => {
+    if (marker) {
+      marker.setOptions(options);
+    }
+  }, [marker, options]);
+
+  return null;
+};
 
 // const MapComponent: React.FC<{}> = () => {
 //   const ref = React.useRef<HTMLDivElement>(null);

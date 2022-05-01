@@ -10,10 +10,10 @@ import MaskEdit from './masks/components/MaskEdit';
 import QRPage from './common/components/QRPage';
 import MapComponent from './map/MapComponent';
 import { Wrapper, Status } from '@googlemaps/react-wrapper';
+import MapTest from './map/MapTest';
 
 const queryClient = new QueryClient();
 const { REACT_APP_GOOGLE_KEY } = process.env;
-console.log(REACT_APP_GOOGLE_KEY);
 
 function App() {
   const render = (status: Status) => {
@@ -26,14 +26,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<SignupPage />} />
         <Route path="/qr/:id" element={<QRPage />} />
-        <Route
-          path="/map"
-          element={
-            <Wrapper apiKey={`${REACT_APP_GOOGLE_KEY}`} render={render}>
-              <MapComponent />
-            </Wrapper>
-          }
-        />
+        <Route path="/map" element={<MapTest />} />
         <Route path="/masks">
           <Route path="add" element={<MaskEdit />} />
           <Route path=":id" element={<MaskEdit />} />
