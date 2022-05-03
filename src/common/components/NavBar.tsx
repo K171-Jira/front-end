@@ -78,6 +78,7 @@ const NavBar = () => {
                 >
                   QR
                 </Button>
+                <Button component={Link} to={`/user/${user._id}`} color="green" >Keisti paskyros duomenis </Button>
                 <MediaQuery largerThan="md" styles={{ display: 'none' }}>
                   <Space h="lg" />
                 </MediaQuery>

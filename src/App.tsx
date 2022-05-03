@@ -8,6 +8,8 @@ import { Route, Routes } from 'react-router-dom';
 import MaskList from './masks/components/MaskList';
 import MaskEdit from './masks/components/MaskEdit';
 import QRPage from './common/components/QRPage';
+import EditPage from './users/components/EditPage';
+import ChangePasswordPage from './users/components/ChangePasswordPage';
 
 const queryClient = new QueryClient();
 
@@ -18,6 +20,11 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<SignupPage />} />
+        <Route path="/user">
+          <Route path=":id" element={<EditPage />} />
+          <Route path="changePassword" element={<ChangePasswordPage />} />
+        </Route>
+        
         <Route path="/qr/:id" element={<QRPage />} />
         <Route path="/masks">
           <Route path="add" element={<MaskEdit />} />
