@@ -15,7 +15,7 @@ import {
 import React from 'react';
 import { MdOutlineMasks } from 'react-icons/md';
 import AuthService from '../../authentication/AuthService';
-import { HiQrcode } from 'react-icons/hi';
+import { HiQrcode, HiCreditCard } from 'react-icons/hi';
 
 const NavButton = ({
   to,
@@ -68,6 +68,16 @@ const NavBar = () => {
               </Group>
             ) : (
               <Group>
+				<Button
+                  component={Link}
+                  to={`/payment`}
+                  variant="subtle"
+                  color="green"
+                  size="lg"
+                  leftIcon={<HiCreditCard />}
+                >
+                  Mokėjimas
+                </Button>
                 <Button
                   component={Link}
                   to={`/qr/${user._id}`}
