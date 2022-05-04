@@ -36,7 +36,7 @@ export default function PaymentForm() {
 		if (element === null) {
 			throw new Error(`BUG: stripe elements element is null`)
 		}
-        const {error, paymentMethod, isLoading} = await stripe.createPaymentMethod({
+        const {error, paymentMethod} = await stripe.createPaymentMethod({
             type: "card",
             card: element
         })
