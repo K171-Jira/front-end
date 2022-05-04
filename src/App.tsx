@@ -11,6 +11,7 @@ import QRPage from './common/components/QRPage';
 import MapComponent from './map/MapComponent';
 import { Wrapper, Status } from '@googlemaps/react-wrapper';
 import MapTest from './map/MapTest';
+import StripeContainer from './payment/StripeContainer';
 
 const queryClient = new QueryClient();
 const { REACT_APP_GOOGLE_KEY } = process.env;
@@ -26,6 +27,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<SignupPage />} />
         <Route path="/qr/:id" element={<QRPage />} />
+		<Route path="/payment" element={<StripeContainer />} />
         <Route path="/map" element={<MapTest />} />
         <Route path="/masks">
           <Route path="add" element={<MaskEdit />} />
