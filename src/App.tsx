@@ -8,6 +8,8 @@ import { Route, Routes } from 'react-router-dom';
 import MaskList from './masks/components/MaskList';
 import MaskEdit from './masks/components/MaskEdit';
 import QRPage from './common/components/QRPage';
+import EditPage from './users/components/EditPage';
+import ChangePasswordPage from './users/components/ChangePasswordPage';
 import MapComponent from './map/MapComponent';
 import { Wrapper, Status } from '@googlemaps/react-wrapper';
 import MapTest from './map/MapTest';
@@ -25,6 +27,11 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<SignupPage />} />
+        <Route path="/user">
+          <Route path=":id" element={<EditPage />} />
+          <Route path="changePassword" element={<ChangePasswordPage />} />
+        </Route>
+        
         <Route path="/qr/:id" element={<QRPage />} />
         <Route path="/map" element={<MapTest />} />
         <Route path="/masks">
