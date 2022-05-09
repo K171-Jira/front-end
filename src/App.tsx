@@ -10,7 +10,6 @@ import MaskEdit from './masks/components/MaskEdit';
 import QRPage from './common/components/QRPage';
 import EditPage from './users/components/EditPage';
 import ChangePasswordPage from './users/components/ChangePasswordPage';
-import MapComponent from './map/MapComponent';
 import { Wrapper, Status } from '@googlemaps/react-wrapper';
 import MapTest from './map/MapTest';
 

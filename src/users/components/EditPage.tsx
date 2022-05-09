@@ -36,11 +36,11 @@ const EditPage = () => {
     enabled: !!id,
   });
 
-  const { mutate: saveUser, isLoading } = useMutation(AuthService.saveUser, {
+  const { mutate: saveUser, isLoading, error, isError } = useMutation(AuthService.saveUser, {
     onSuccess: () => {
       navigate('/masks');
     },
-    onError: () => {},
+    onError: (err: any) => {},
   });
 
   const form: UseFormReturnType<EditData> = useForm({
@@ -65,10 +65,6 @@ const EditPage = () => {
     });
   }, [user]);
 
-  // const handlePasswordChange = () => {
-  //   setDialogOpened(true);
-  // };
-      
   return (
     <><Container style={{ marginTop: '100px' }}>
       <Card shadow="xl" p="md" sx={{ maxWidth: 400 }} mx="auto" withBorder>
@@ -125,21 +121,15 @@ const EditPage = () => {
                 Atšaukti
               </Button>
             </Group>
-            {/* {isError && (
+            {isError && (
               <Alert icon={<FiAlertTriangle />} title="Kažkas nepavyko!" color="red" radius="md">
                 {error?.response.data.message}
               </Alert>
-            )} */}
+            )}
           </form>
         )}
       </Card>
     </Container>
-    {/* <ConfirmDialog
-        opened={dialogOpened}
-        onClose={() => setDialogOpened(false)}
-        onConfirm={() => {
-          changePassword(id!);
-        } } />c */}
     </>
   );
 };

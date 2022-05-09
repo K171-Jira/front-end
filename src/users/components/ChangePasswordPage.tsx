@@ -34,11 +34,11 @@ const ChangePasswordPage = () => {
     const [dialogOpened, setDialogOpened] = useState(false);
   
 
-    const { mutate: changePassword, isLoading } = useMutation(AuthService.changePassword, {
+    const { mutate: changePassword, isLoading, error, isError } = useMutation(AuthService.changePassword, {
         onSuccess: () => {
             navigate('/masks');
         },
-        onError: () => {},
+        onError: (err: any) => {},
     });
 
     const form = useForm<Partial<ChangePasswordRequest>>({
@@ -48,7 +48,8 @@ const ChangePasswordPage = () => {
         },
     
         validate: {
-            password: (value) => (value?.length == null ? 'Enter password' : null),
+
+            password: (value) => (value?.length == null ? 'Enter password' : null), 
             newPassword: (value) => (value != null && value.length < 8 ? 'Password must be 8 characters or more' : null),
         },
       });
@@ -103,11 +104,11 @@ const ChangePasswordPage = () => {
               </Button>
             </Group>
                 <Space h="md" />
-                {/* {isError && (
+                {isError && (
                   <Alert icon={<FiAlertTriangle />} title="Kažkas nepavyko!" color="red" radius="md">
                     {error?.response.data.message}
                   </Alert>
-                )} */}
+                )}
               </form>
             )}
           </Card>
