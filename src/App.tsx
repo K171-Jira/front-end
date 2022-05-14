@@ -4,26 +4,22 @@ import SignupPage from './authentication/SignupPage';
 import LoginPage from './authentication/LoginPage';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import NavBar from './common/components/NavBar';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import MaskList from './masks/components/MaskList';
 import MaskEdit from './masks/components/MaskEdit';
 import QRPage from './common/components/QRPage';
+import PointsMap from './map/PointsMap';
 import EditPage from './users/components/EditPage';
 import ChangePasswordPage from './users/components/ChangePasswordPage';
-import { Wrapper, Status } from '@googlemaps/react-wrapper';
-import MapTest from './map/MapTest';
 import StripeContainer from './payment/StripeContainer';
 
 const queryClient = new QueryClient();
-const { REACT_APP_GOOGLE_KEY } = process.env;
 
 function App() {
-  const render = (status: Status) => {
-    return <h1>{status}</h1>;
-  };
+  const { pathname } = useLocation();
   return (
     <QueryClientProvider client={queryClient}>
-      <NavBar />
+      {pathname !== '/map' && <NavBar />}
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<SignupPage />} />
@@ -33,8 +29,8 @@ function App() {
         </Route>
         
         <Route path="/qr/:id" element={<QRPage />} />
-		<Route path="/payment" element={<StripeContainer />} />
-        <Route path="/map" element={<MapTest />} />
+        <Route path="/map" element={<PointsMap />} />
+		    <Route path="/payment" element={<StripeContainer />} />
         <Route path="/masks">
           <Route path="add" element={<MaskEdit />} />
           <Route path=":id" element={<MaskEdit />} />

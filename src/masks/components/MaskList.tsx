@@ -25,7 +25,7 @@ const MaskList = () => {
                 navigate('add');
               }}
             >
-              Add New
+              Pridėti kaukę
             </Button>
           </Group>
         </Container>
