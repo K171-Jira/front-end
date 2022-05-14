@@ -1,19 +1,9 @@
 import { Link, useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 import './NavBar.scss';
 import { FiLogOut } from 'react-icons/fi';
-import {
-  Button,
-  Card,
-  Container,
-  Group,
-  useMantineTheme,
-  Text,
-  ActionIcon,
-  MediaQuery,
-  Space,
-} from '@mantine/core';
+import { Button, Card, Container, Group, Text, ActionIcon, MediaQuery, Space } from '@mantine/core';
 import React from 'react';
-import { MdOutlineMasks } from 'react-icons/md';
+import { MdOutlineMap, MdOutlineMasks } from 'react-icons/md';
 import AuthService from '../../authentication/AuthService';
 import { HiQrcode } from 'react-icons/hi';
 
@@ -57,10 +47,11 @@ const NavBar = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Container mx="auto" my={20} px={25}>
+      <Container className={'navigation-bar'} mx="auto" my={20} px={25}>
         <Card shadow="md" radius="lg" p="md" withBorder>
           <Group position="apart">
             <NavButton to="/masks" color="green" title="Kaukės" icon={<MdOutlineMasks />} />
+            <NavButton to="/map" color="green" title="Rūšiavimo taškai" icon={<MdOutlineMap />} />
             {!user ? (
               <Group>
                 <NavButton to="/login" color="green" title="Prisijungti" />
