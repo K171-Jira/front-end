@@ -5,7 +5,7 @@ import { Button, Card, Container, Group, Text, ActionIcon, MediaQuery, Space } f
 import React from 'react';
 import { MdOutlineMap, MdOutlineMasks } from 'react-icons/md';
 import AuthService from '../../authentication/AuthService';
-import { HiQrcode } from 'react-icons/hi';
+import { HiQrcode, HiCreditCard } from 'react-icons/hi';
 
 const NavButton = ({
   to,
@@ -59,6 +59,16 @@ const NavBar = () => {
               </Group>
             ) : (
               <Group>
+				<Button
+                  component={Link}
+                  to={`/payment`}
+                  variant="subtle"
+                  color="green"
+                  size="lg"
+                  leftIcon={<HiCreditCard />}
+                >
+                  Mokėjimas
+                </Button>
                 <Button
                   component={Link}
                   to={`/qr/${user._id}`}
@@ -69,6 +79,7 @@ const NavBar = () => {
                 >
                   QR
                 </Button>
+                <Button component={Link} to={`/user/${user._id}`} color="green" >Keisti paskyros duomenis </Button>
                 <MediaQuery largerThan="md" styles={{ display: 'none' }}>
                   <Space h="lg" />
                 </MediaQuery>

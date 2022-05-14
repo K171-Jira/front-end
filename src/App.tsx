@@ -9,6 +9,9 @@ import MaskList from './masks/components/MaskList';
 import MaskEdit from './masks/components/MaskEdit';
 import QRPage from './common/components/QRPage';
 import PointsMap from './map/PointsMap';
+import EditPage from './users/components/EditPage';
+import ChangePasswordPage from './users/components/ChangePasswordPage';
+import StripeContainer from './payment/StripeContainer';
 
 const queryClient = new QueryClient();
 
@@ -20,8 +23,14 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<SignupPage />} />
+        <Route path="/user">
+          <Route path=":id" element={<EditPage />} />
+          <Route path="changePassword" element={<ChangePasswordPage />} />
+        </Route>
+        
         <Route path="/qr/:id" element={<QRPage />} />
         <Route path="/map" element={<PointsMap />} />
+		    <Route path="/payment" element={<StripeContainer />} />
         <Route path="/masks">
           <Route path="add" element={<MaskEdit />} />
           <Route path=":id" element={<MaskEdit />} />
