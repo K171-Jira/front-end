@@ -1,8 +1,18 @@
 import { Link, useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 import './NavBar.scss';
 import { FiLogOut } from 'react-icons/fi';
-import { Button, Card, Container, Group, Text, ActionIcon, MediaQuery, Space } from '@mantine/core';
-import React from 'react';
+import {
+  Button,
+  Card,
+  Container,
+  Group,
+  ActionIcon,
+  MediaQuery,
+  Burger,
+  Stack,
+  Anchor,
+} from '@mantine/core';
+import React, { useState } from 'react';
 import { MdOutlineMap, MdOutlineMasks } from 'react-icons/md';
 import AuthService from '../../authentication/AuthService';
 import { HiQrcode, HiCreditCard } from 'react-icons/hi';
@@ -44,59 +54,98 @@ const NavButton = ({
 
 const NavBar = () => {
   const user = AuthService.getCurrentUser();
+  const [opened, setOpened] = useState(false);
   const navigate = useNavigate();
+
   return (
     <>
       <Container className={'navigation-bar'} mx="auto" my={20} px={25}>
         <Card shadow="md" radius="lg" p="md" withBorder>
-          <Group position="apart">
-            <NavButton to="/masks" color="green" title="Kaukės" icon={<MdOutlineMasks />} />
-            <NavButton to="/map" color="green" title="Rūšiavimo taškai" icon={<MdOutlineMap />} />
-            {!user ? (
-              <Group>
-                <NavButton to="/login" color="green" title="Prisijungti" />
-                <NavButton to="/register" color="green" title="Registruotis" />
+          <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+            <Group position="apart">
+              <NavButton to="/masks" color="green" title="Kaukės" icon={<MdOutlineMasks />} />
+              <NavButton to="/map" color="green" title="Rūšiavimo taškai" icon={<MdOutlineMap />} />
+              <NavButton to="/payment" color="green" title="Mokėjimas" icon={<HiCreditCard />} />
+              {!user ? (
+                <Group>
+                  <NavButton to="/login" color="green" title="Prisijungti" />
+                  <NavButton to="/register" color="green" title="Registruotis" />
+                </Group>
+              ) : (
+                <Group>
+                  <Button
+                    component={Link}
+                    to={`/qr/${user._id}`}
+                    variant="subtle"
+                    color="green"
+                    size="lg"
+                    leftIcon={<HiQrcode />}
+                  >
+                    QR
+                  </Button>
+                  <Anchor component={Link} to={`/user/${user._id}`}>
+                    {user.email}
+                  </Anchor>
+                  <ActionIcon
+                    color="green"
+                    size="lg"
+                    onClick={() => {
+                      AuthService.logout();
+                      navigate('/');
+                    }}
+                  >
+                    <FiLogOut />
+                  </ActionIcon>
+                </Group>
+              )}
+            </Group>
+          </MediaQuery>
+          <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+            <Stack>
+              <Group position="apart">
+                <Burger opened={opened} onClick={() => setOpened((o) => !o)} />
+                {!user ? (
+                  <Group>
+                    <NavButton to="/login" color="green" title="Prisijungti" />
+                    <NavButton to="/register" color="green" title="Registruotis" />
+                  </Group>
+                ) : (
+                  <Group>
+                    <Button
+                      component={Link}
+                      to={`/qr/${user._id}`}
+                      variant="subtle"
+                      color="green"
+                      size="lg"
+                      leftIcon={<HiQrcode />}
+                    >
+                      QR
+                    </Button>
+                    <Anchor component={Link} to={`/user/${user._id}`}>
+                      {user.email}
+                    </Anchor>
+                    <ActionIcon
+                      color="green"
+                      size="lg"
+                      onClick={() => {
+                        AuthService.logout();
+                        navigate('/');
+                      }}
+                    >
+                      <FiLogOut />
+                    </ActionIcon>
+                  </Group>
+                )}
               </Group>
-            ) : (
-              <Group>
-				<Button
-                  component={Link}
-                  to={`/payment`}
-                  variant="subtle"
-                  color="green"
-                  size="lg"
-                  leftIcon={<HiCreditCard />}
-                >
-                  Mokėjimas
-                </Button>
-                <Button
-                  component={Link}
-                  to={`/qr/${user._id}`}
-                  variant="subtle"
-                  color="green"
-                  size="lg"
-                  leftIcon={<HiQrcode />}
-                >
-                  QR
-                </Button>
-                <Button component={Link} to={`/user/${user._id}`} color="green" >Keisti paskyros duomenis </Button>
-                <MediaQuery largerThan="md" styles={{ display: 'none' }}>
-                  <Space h="lg" />
-                </MediaQuery>
-                <Text size="xs">{user.email}</Text>
-                <ActionIcon
-                  color="green"
-                  size="lg"
-                  onClick={() => {
-                    AuthService.logout();
-                    navigate('/');
-                  }}
-                >
-                  <FiLogOut />
-                </ActionIcon>
-              </Group>
-            )}
-          </Group>
+              {opened && (
+                <Group>
+                  <NavButton to="/masks" color="green" title="Kaukės" icon={<MdOutlineMasks />} />
+                  <NavButton to="/map" color="green" title="Rūšiavimo taškai" icon={<MdOutlineMap />} />
+                  <NavButton to="/payment" color="green" title="Mokėjimas" icon={<HiCreditCard />} />
+                </Group>
+              )}
+            </Stack>
+          </MediaQuery>
         </Card>
       </Container>
     </>

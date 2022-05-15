@@ -111,7 +111,7 @@ const PointsMap = () => {
           </Group>
         </Container>
       )}
-      {points.map((point: RecyclingPoint, index: number) => (
+      {points?.map((point: RecyclingPoint, index: number) => (
         <Marker
           icon={markerSvg}
           key={index}
