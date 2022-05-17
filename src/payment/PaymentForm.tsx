@@ -17,12 +17,17 @@ import {
   PasswordInput,
 } from '@mantine/core';
 
+import User from '../users/models/User';
+import AuthService from '../authentication/AuthService';
+
+
 export default function PaymentForm() {
     const [success, setSuccess ] = useState(false)
     const stripe = useStripe()
     const elements = useElements()
 
 
+	
     const handleSubmit = async (e: any) => {
         e.preventDefault()
 		if (stripe === null) {
@@ -45,15 +50,20 @@ export default function PaymentForm() {
     if(!error) {
         try {
             const {id} = paymentMethod
+			const {_id, balance} = AuthService.getCurrentUser();
             const response = await axios.post(`${API_URL}/payments`, {
                 amount: 1000,
-                id
+                id,
+				_id,
+				balance
             })
-
             if(response.data.success) {
                 console.log("Apmokėjimas pavyko")
                 setSuccess(true)
             }
+			else {
+				console.log("Error", response.data)
+			}
 
         } catch (error) {
             console.log("Error", error)
