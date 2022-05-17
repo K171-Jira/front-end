@@ -10,6 +10,9 @@ import {
   MediaQuery,
   Burger,
   Stack,
+  Badge,
+  Center,
+  Space,
   Anchor,
 } from '@mantine/core';
 import React, { useState } from 'react';
@@ -85,6 +88,12 @@ const NavBar = () => {
                   </Button>
                   <Anchor component={Link} to={`/user/${user._id}`}>
                     {user.email}
+					<Space w="xs"/>
+					<Center>
+					<Badge color="green">
+					Balansas:{user.balance}
+					</Badge>
+					</Center>
                   </Anchor>
                   <ActionIcon
                     color="green"
