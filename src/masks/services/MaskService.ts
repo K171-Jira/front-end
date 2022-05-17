@@ -1,10 +1,11 @@
 import { API_URL } from '../../common/constants';
 import axios from 'axios';
 import Mask from '../models/Mask';
+import SearchOptions from '../components/SearchOptions';
 
 export const getMasks = async ({ queryKey }: any) => {
-  const [, query] = queryKey;
-  const response = await axios.get(`${API_URL}/masks?textQuery=${query}`);
+  const [, searchOptions] = queryKey
+  const response = await axios.get(`${API_URL}/masks?textQuery=${searchOptions.textQuery}&brand=${searchOptions.filters.brand}&amount=${searchOptions.filters.amount ?? ""}&priceFloor=${searchOptions.filters.priceFloor ?? ""}&priceCeiling=${searchOptions.filters.priceCeiling ?? ""}&type=${searchOptions.filters.type}`);
   return response.data;
 };
 
