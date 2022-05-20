@@ -162,16 +162,18 @@ const PointsMap = () => {
                   animate
                 />
               </Group>
-              <Button
-                color="red"
-                radius="md"
-                size="xs"
-                onClick={() => {
-                  deletePoint(selectedPoint._id);
-                }}
-              >
-                Pašalinti
-              </Button>
+              {userIsAdmin && (
+                <Button
+                  color="red"
+                  radius="md"
+                  size="xs"
+                  onClick={() => {
+                    deletePoint(selectedPoint._id);
+                  }}
+                >
+                  Pašalinti
+                </Button>
+              )}
             </Stack>
           </Container>
         </InfoWindow>
