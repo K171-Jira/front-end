@@ -72,7 +72,7 @@ const NavHoverMenu = ({ user, logout, buttonSize = 'lg', avatarSize = 'md' }: an
             <Avatar size={avatarSize} color="cyan" radius="xl">
               {user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()}
             </Avatar>
-            Balansas: {user.balance}
+            Balansas: {user.balance.toString()}
             <AiFillCaretDown size={'10px'} />
           </Group>
         </Button>
