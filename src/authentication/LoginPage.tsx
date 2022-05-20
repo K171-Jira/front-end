@@ -47,7 +47,7 @@ const LoginPage = () => {
           <Loader color="lime" size={80} variant="bars" />
         ) : (
           <form className="form" onSubmit={form.onSubmit(() => mutate(form.values))}>
-            <Title order={1}>Login</Title>
+            <Title order={1}>Prisijungimas</Title>
             <Space h="md" />
             <TextInput
               required
