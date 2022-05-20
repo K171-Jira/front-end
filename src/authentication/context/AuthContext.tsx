@@ -5,10 +5,12 @@ import { AuthService } from '../services/AuthService';
 import SignupData from '../models/SignupData';
 import User from '../../users/models/User';
 import ChangePasswordRequest from '../../users/components/ChangePasswordRequest';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext<UserContextType | null>(null);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState<IUser | null>(
     localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : null
   );
@@ -25,6 +27,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
+    navigate('/masks');
   };
 
   const signup = async (signupData: SignupData) => {
