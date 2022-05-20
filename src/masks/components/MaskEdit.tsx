@@ -79,7 +79,7 @@ const MaskEdit = () => {
           ) : (
             <form onSubmit={form.onSubmit(() => saveMask(new Mask({ ...form.values, _id: id })))}>
               <Stack spacing="lg">
-                <Title order={2}>{id ? 'Kaukės atnaujinimas' : 'Nauja kaukė'}</Title>
+                <Title order={2}>{id ? 'Kaukės redagavimas' : 'Nauja kaukė'}</Title>
                 <TextInput
                   variant="default"
                   placeholder="Pavadinimas"
