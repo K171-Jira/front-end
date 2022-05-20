@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from '@mantine/form';
 import {
   TextInput,
@@ -12,14 +12,16 @@ import {
   Container,
 } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form/lib/use-form';
-import AuthService from './AuthService';
 import { useMutation } from 'react-query';
 import { FiAlertTriangle } from 'react-icons/fi';
-import LoginData from './LoginData';
+import LoginData from './models/LoginData';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from './context/AuthContext';
+import { UserContextType } from './models/User';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext) as UserContextType;
   const form: UseFormReturnType<LoginData> = useForm({
     initialValues: new LoginData({
       email: '',
@@ -31,7 +33,7 @@ const LoginPage = () => {
     },
   });
 
-  const { mutate, isLoading, error, isError } = useMutation(AuthService.login, {
+  const { mutate, isLoading, error, isError } = useMutation(login, {
     onSuccess: () => {
       navigate('/masks');
     },
@@ -44,7 +46,7 @@ const LoginPage = () => {
         {isLoading ? (
           <Loader color="lime" size={80} variant="bars" />
         ) : (
-          <form className="form" onSubmit={form.onSubmit((values: any) => console.log(values))}>
+          <form className="form" onSubmit={form.onSubmit(() => mutate(form.values))}>
             <Title order={1}>Login</Title>
             <Space h="md" />
             <TextInput
@@ -67,9 +69,7 @@ const LoginPage = () => {
               radius="xl"
               size="md"
               style={{ marginTop: 20 }}
-              onClick={() => {
-                mutate(form.values);
-              }}
+              type="submit"
             >
               Prisijungti
             </Button>

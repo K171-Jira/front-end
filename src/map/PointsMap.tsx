@@ -1,13 +1,14 @@
 import { GoogleMap, InfoWindow, Marker, useJsApiLoader } from '@react-google-maps/api';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import NavBar from '../common/components/NavBar';
 import { Button, Container, Group, Progress, Stack, Text, Title } from '@mantine/core';
 import RecyclingPoint from './models/RecyclingPoint';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
-import AuthService from '../authentication/AuthService';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import RecyclingPointService from './services/RecyclingPointService';
 import Geocode from 'react-geocode';
+import { AuthContext } from '../authentication/context/AuthContext';
+import { UserContextType } from '../authentication/models/User';
 
 const containerStyle = {
   width: '100%',
@@ -21,7 +22,8 @@ const center = {
 };
 
 const PointsMap = () => {
-  const userIsAdmin = AuthService.getCurrentUser()?.role === 'Admin';
+  const { user } = useContext(AuthContext) as UserContextType;
+  const userIsAdmin = user?.role === 'Admin';
   const queryClient = useQueryClient();
   const { data: points } = useQuery('points', RecyclingPointService.getPoints);
   const { mutate: savePoint } = useMutation(RecyclingPointService.savePoint, {
@@ -111,19 +113,23 @@ const PointsMap = () => {
           </Group>
         </Container>
       )}
-      {points?.map((point: RecyclingPoint, index: number) => (
-        <Marker
-          icon={markerSvg}
-          key={index}
-          position={{
-            lat: point.lat,
-            lng: point.lng,
-          }}
-          onClick={() => {
-            setSelectedPoint(point);
-          }}
-        />
-      ))}
+      {points?.map(
+        (point: RecyclingPoint, index: number) =>
+          point.lat &&
+          point.lng && (
+            <Marker
+              icon={markerSvg}
+              key={index}
+              position={{
+                lat: point.lat,
+                lng: point.lng,
+              }}
+              onClick={() => {
+                setSelectedPoint(point);
+              }}
+            />
+          )
+      )}
       {selectedPoint && (
         <InfoWindow
           onCloseClick={() => {

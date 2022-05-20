@@ -3,6 +3,7 @@ import './NavBar.scss';
 import { FiLogOut } from 'react-icons/fi';
 import {
   Button,
+  Text,
   Card,
   Container,
   Group,
@@ -10,26 +11,31 @@ import {
   MediaQuery,
   Burger,
   Stack,
-  Badge,
-  Center,
-  Space,
   Anchor,
+  Menu,
+  Avatar,
+  Divider,
+  MantineSize,
 } from '@mantine/core';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { MdOutlineMap, MdOutlineMasks } from 'react-icons/md';
-import AuthService from '../../authentication/AuthService';
 import { HiQrcode, HiCreditCard } from 'react-icons/hi';
+import { UserContextType } from '../../authentication/models/User';
+import { AuthContext } from '../../authentication/context/AuthContext';
+import { AiFillCaretDown, AiOutlineEdit, AiOutlineCreditCard } from 'react-icons/ai';
 
 const NavButton = ({
   to,
   color,
   title,
   icon = '',
+  size = 'lg',
 }: {
   to: string;
   color: string;
   title: string;
   icon?: React.ReactNode;
+  size?: MantineSize;
 }) => {
   let resolved = useResolvedPath(to);
   let match = useMatch({ path: resolved.pathname, end: true });
@@ -46,7 +52,7 @@ const NavButton = ({
       to={to}
       variant="subtle"
       color={color}
-      size="lg"
+      size={size}
       leftIcon={icon}
       style={{ backgroundColor: match ? getActiveColor(color!) : '' }}
     >
@@ -55,8 +61,59 @@ const NavButton = ({
   );
 };
 
+const NavHoverMenu = ({ user, logout, buttonSize = 'lg', avatarSize = 'md' }: any) => {
+  const navigate = useNavigate();
+
+  return (
+    <Menu
+      control={
+        <Button color="green" size={buttonSize} variant="subtle">
+          <Group>
+            <Avatar size={avatarSize} color="cyan" radius="xl">
+              {user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()}
+            </Avatar>
+            Balansas: {user.balance}
+            <AiFillCaretDown size={'10px'} />
+          </Group>
+        </Button>
+      }
+    >
+      <Menu.Label>{user.email}</Menu.Label>
+      <Menu.Item
+        icon={<AiOutlineCreditCard />}
+        onClick={() => {
+          navigate('/payment');
+        }}
+      >
+        {' '}
+        Papildyti balansą
+      </Menu.Item>
+      <Menu.Item
+        icon={<AiOutlineEdit />}
+        onClick={() => {
+          navigate(`/user/${user._id}`);
+        }}
+      >
+        {' '}
+        Redaguoti paskyrą
+      </Menu.Item>
+      <Divider />
+      <Menu.Item
+        color={'red'}
+        icon={<FiLogOut />}
+        onClick={() => {
+          logout();
+        }}
+      >
+        {' '}
+        Atsijungti
+      </Menu.Item>
+    </Menu>
+  );
+};
+
 const NavBar = () => {
-  const user = AuthService.getCurrentUser();
+  const { user, logout } = useContext(AuthContext) as UserContextType;
   const [opened, setOpened] = useState(false);
   const navigate = useNavigate();
 
@@ -68,7 +125,6 @@ const NavBar = () => {
             <Group position="apart">
               <NavButton to="/masks" color="green" title="Kaukės" icon={<MdOutlineMasks />} />
               <NavButton to="/map" color="green" title="Rūšiavimo taškai" icon={<MdOutlineMap />} />
-              <NavButton to="/payment" color="green" title="Mokėjimas" icon={<HiCreditCard />} />
               {!user ? (
                 <Group>
                   <NavButton to="/login" color="green" title="Prisijungti" />
@@ -86,25 +142,20 @@ const NavBar = () => {
                   >
                     QR
                   </Button>
-                  <Anchor component={Link} to={`/user/${user._id}`}>
-                    {user.email}
-					<Space w="xs"/>
-					<Center>
-					<Badge color="green">
-					Balansas:{user.balance}
-					</Badge>
-					</Center>
-                  </Anchor>
-                  <ActionIcon
-                    color="green"
-                    size="lg"
-                    onClick={() => {
-                      AuthService.logout();
-                      navigate('/');
-                    }}
-                  >
-                    <FiLogOut />
-                  </ActionIcon>
+                  {/*<Anchor component={Link} to={`/user/${user._id}`}>*/}
+                  {/*  {user.email}*/}
+                  {/*</Anchor>*/}
+                  {/*<ActionIcon*/}
+                  {/*  color="green"*/}
+                  {/*  size="lg"*/}
+                  {/*  onClick={() => {*/}
+                  {/*    logout();*/}
+                  {/*    navigate('/');*/}
+                  {/*  }}*/}
+                  {/*>*/}
+                  {/*  <FiLogOut />*/}
+                  {/*</ActionIcon>*/}
+                  <NavHoverMenu user={user} logout={logout} />
                 </Group>
               )}
             </Group>
@@ -112,7 +163,7 @@ const NavBar = () => {
           <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
             <Stack>
               <Group position="apart">
-                <Burger opened={opened} onClick={() => setOpened((o) => !o)} />
+                <Burger size={'xs'} opened={opened} onClick={() => setOpened((o) => !o)} />
                 {!user ? (
                   <Group>
                     <NavButton to="/login" color="green" title="Prisijungti" />
@@ -125,32 +176,38 @@ const NavBar = () => {
                       to={`/qr/${user._id}`}
                       variant="subtle"
                       color="green"
-                      size="lg"
+                      size="sm"
                       leftIcon={<HiQrcode />}
                     >
                       QR
                     </Button>
-                    <Anchor component={Link} to={`/user/${user._id}`}>
-                      {user.email}
-                    </Anchor>
-                    <ActionIcon
-                      color="green"
-                      size="lg"
-                      onClick={() => {
-                        AuthService.logout();
-                        navigate('/');
-                      }}
-                    >
-                      <FiLogOut />
-                    </ActionIcon>
+                    {/*<Anchor component={Link} to={`/user/${user._id}`}>*/}
+                    {/*  {user.email}*/}
+                    {/*</Anchor>*/}
+                    {/*<ActionIcon*/}
+                    {/*  color="green"*/}
+                    {/*  size="lg"*/}
+                    {/*  onClick={() => {*/}
+                    {/*    logout();*/}
+                    {/*    navigate('/');*/}
+                    {/*  }}*/}
+                    {/*>*/}
+                    {/*  <FiLogOut />*/}
+                    {/*</ActionIcon>*/}
+                    <NavHoverMenu avatarSize={'sm'} buttonSize={'sm'} user={user} logout={logout} />
                   </Group>
                 )}
               </Group>
               {opened && (
                 <Group>
-                  <NavButton to="/masks" color="green" title="Kaukės" icon={<MdOutlineMasks />} />
-                  <NavButton to="/map" color="green" title="Rūšiavimo taškai" icon={<MdOutlineMap />} />
-                  <NavButton to="/payment" color="green" title="Mokėjimas" icon={<HiCreditCard />} />
+                  <NavButton size={'sm'} to="/masks" color="green" title="Kaukės" icon={<MdOutlineMasks />} />
+                  <NavButton
+                    size={'sm'}
+                    to="/map"
+                    color="green"
+                    title="Rūšiavimo taškai"
+                    icon={<MdOutlineMap />}
+                  />
                 </Group>
               )}
             </Stack>

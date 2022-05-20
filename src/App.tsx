@@ -12,6 +12,7 @@ import PointsMap from './map/PointsMap';
 import EditPage from './users/components/EditPage';
 import ChangePasswordPage from './users/components/ChangePasswordPage';
 import StripeContainer from './payment/StripeContainer';
+import AuthProvider from './authentication/context/AuthContext';
 
 const queryClient = new QueryClient();
 
@@ -19,24 +20,26 @@ function App() {
   const { pathname } = useLocation();
   return (
     <QueryClientProvider client={queryClient}>
-      {pathname !== '/map' && <NavBar />}
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<SignupPage />} />
-        <Route path="/user">
-          <Route path=":id" element={<EditPage />} />
-          <Route path="changePassword" element={<ChangePasswordPage />} />
-        </Route>
-        
-        <Route path="/qr/:id" element={<QRPage />} />
-        <Route path="/map" element={<PointsMap />} />
-		    <Route path="/payment" element={<StripeContainer />} />
-        <Route path="/masks">
-          <Route path="add" element={<MaskEdit />} />
-          <Route path=":id" element={<MaskEdit />} />
-          <Route index element={<MaskList />} />
-        </Route>
-      </Routes>
+      <AuthProvider>
+        {pathname !== '/map' && <NavBar />}
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<SignupPage />} />
+          <Route path="/user">
+            <Route path=":id" element={<EditPage />} />
+            <Route path="changePassword" element={<ChangePasswordPage />} />
+          </Route>
+
+          <Route path="/qr/:id" element={<QRPage />} />
+          <Route path="/map" element={<PointsMap />} />
+          <Route path="/payment" element={<StripeContainer />} />
+          <Route path="/masks">
+            <Route path="add" element={<MaskEdit />} />
+            <Route path=":id" element={<MaskEdit />} />
+            <Route index element={<MaskList />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

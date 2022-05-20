@@ -1,10 +1,14 @@
 import './MaskBox.scss';
 import { Badge, Button, Card, Group, Image, Space, Text, useMantineTheme } from '@mantine/core';
 import Mask from '../models/Mask';
-import AuthService from '../../authentication/AuthService';
+import { AuthService } from '../../authentication/services/AuthService';
+import { useContext } from 'react';
+import { AuthContext } from '../../authentication/context/AuthContext';
+import { UserContextType } from '../../authentication/models/User';
 
 const MaskBox = ({ mask }: { mask: Mask }) => {
-  const userIsAdmin = AuthService.getCurrentUser()?.role === 'Admin';
+  const { user } = useContext(AuthContext) as UserContextType;
+  const userIsAdmin = user?.role === 'Admin';
   const theme = useMantineTheme();
   return (
     <Card
