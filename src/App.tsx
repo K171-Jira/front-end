@@ -14,6 +14,7 @@ import ChangePasswordPage from './users/components/ChangePasswordPage';
 import StripeContainer from './payment/StripeContainer';
 import AuthProvider from './authentication/context/AuthContext';
 import LandingPage from './landingPage/LandingPage';
+import { BackgroundImage } from '@mantine/core';
 
 const queryClient = new QueryClient();
 
@@ -22,9 +23,8 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        {pathname !== '/map' && <NavBar />}
+        {pathname !== '/map' && pathname !== '/' && <NavBar />}
         <Routes>
-          {/* include LandingPage.tsx as a main page element */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<SignupPage />} />
