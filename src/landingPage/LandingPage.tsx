@@ -4,7 +4,6 @@ import {
   Button,
   Container,
   Group,
-  Progress,
   Stack,
   Text,
   Title,
@@ -16,6 +15,8 @@ import {
   Blockquote,
   Card,
   Divider,
+  Affix,
+  Transition,
 } from '@mantine/core';
 // import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -28,10 +29,11 @@ import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { FiShoppingBag } from 'react-icons/fi';
 import { RiSurgicalMaskFill } from 'react-icons/ri';
 import NavBar from '../common/components/NavBar';
+import { AiOutlinePhone } from 'react-icons/ai';
 
 const containerStyle = {
   width: '100%',
-  height: '100vh',
+  height: 'auto',
   zIndex: '1',
 };
 
@@ -73,7 +75,6 @@ const LandingPage = () => {
             style={{
               fontSize: '2.5rem',
               fontWeight: 'bold',
-              //textShadow: '2px 2px 4px #235C1D',
               color: '#40c057',
               textAlign: 'center',
               marginTop: '5rem',
@@ -85,12 +86,39 @@ const LandingPage = () => {
           </Title>
           <Divider my="sm" />
           <Text
+            style={{
+              fontSize: '1.5rem',
+              fontWeight: '400',
+              color: '#40c057',
+              textAlign: 'left',
+              marginBottom: '2rem',
+              fontFamily: 'Segoe UI',
+            }}
+          >
+            Masketplace idėja yra rūšiavimas, tačiau šis rūšiavimas turi būti smagus visiems, todėl šis
+            projektas ir atsirado. Kaukės yra perkamos, panaudotos kaukės yra rūšiuojamos, rūšiuotos kaukės
+            yra švariai perdirbamos, o perdirbtos kaukės atsiranda mūsų kataloge. Tai sudaro pilną ratą, mes
+            tikimės, kad labai maža tų kaukių dalis atsiras gatvių ir namų šiukšliadėžėse.
+          </Text>
+          <Divider my="sm" />
+          <Image
+            src="https://www.westernslopenow.com/wp-content/uploads/sites/95/2021/05/GlobalRecyclingDay-2019.jpg"
+            style={{
+              margin: 'auto',
+              maxWidth: '50%',
+              maxHeight: '50%',
+              boxShadow: '0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+            }}
+          />
+          <Space h="xl" />
+          <Divider my="sm" />
+          <Text
             component="span"
             align="center"
             //variant="gradient"
             //gradient={{ from: '#40c057', to: 'cyan', deg: 45 }}
             size="xl"
-            weight={700}
+            weight={400}
             style={{ fontFamily: 'Greycliff CF, sans-serif' }}
             color="dimmed"
           >
@@ -134,23 +162,38 @@ const LandingPage = () => {
               nežinodami, kad jas galima perdirbti, o dabar tam yra specialios vietos.
             </Accordion.Item>
           </Accordion>
-          <Space h="xl" />
           <Text
             component="span"
             align="center"
             //variant="gradient"
             //gradient={{ from: 'cyan', to: '#40c057', deg: 45 }}
             size="xl"
-            weight={700}
+            weight={400}
             style={{ fontFamily: 'Greycliff CF, sans-serif' }}
             color="dimmed"
           >
             Daugelis žmonių meta šiukšles bet kur ir bet kaip, kad tik jų atsikratyti, tačiau nė nesusivokia,
             kad joms priskiriant tam tikras vietas tausotume ir savo pinigus ir savo aplinką.
           </Text>
-
           <Space h="xl" />
           <Divider my="sm" />
+          <Text
+            style={{
+              fontSize: '1.5rem',
+              fontWeight: '400',
+              color: '#40c057',
+              textAlign: 'left',
+              marginBottom: '2rem',
+              fontFamily: 'Segoe UI',
+            }}
+          >
+            Mūsų svetainių ir rūšiavimo mašinų dizainas yra draugiškas akims, todėl net ir su technologijomis
+            nedraugaujantys žmonės tikrai mokės naudotis mūsų sistema. Savo paskyroje rasite QR kodą, kuris
+            yra naudojamas prisijungimui prie rūšiavimo mašinos. Kuomet jūsų nusipirktos kaukės nusidėvės, jas
+            galėsite nusinešti prie rūšiavimo mašinos ir priduoti taip gaudami taškus į savo sistemą.
+            Svetainės žemėlapyje taip pat galima rasti visas rūšiavimo mašinas, galite matyti ar apsimoka į
+            jas važiuoti priklausomai nuo to kiek daug jos yra užpildytos.
+          </Text>
           <Blockquote cite="– Peter F. Hamilton">
             Societies only have waste products while acquiring fresh raw material remains a cheaper option
             than recycling.
@@ -158,6 +201,14 @@ const LandingPage = () => {
           <Divider my="sm" />
         </Container>
       </Card>
+      <Affix position={{ bottom: 20, right: 20 }}>
+        <Button
+          leftIcon={<AiOutlinePhone />}
+          //onClick={() => }
+        >
+          Susisiekite su mumis
+        </Button>
+      </Affix>
     </>
   );
 };
