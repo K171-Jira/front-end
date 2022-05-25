@@ -1,4 +1,3 @@
-// import { GoogleMap, InfoWindow, Marker, useJsApiLoader } from '@react-google-maps/api';
 import React, { useCallback, useContext, useState } from 'react';
 import {
   Button,
@@ -18,13 +17,10 @@ import {
   Affix,
   Transition,
 } from '@mantine/core';
-// import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-// import Geocode from 'react-geocode';
 import { AuthContext } from '../authentication/context/AuthContext';
 import { UserContextType } from '../authentication/models/User';
 import { useWindowScroll } from '@mantine/hooks';
-// import AiOutlineQuestionCircle
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { FiShoppingBag } from 'react-icons/fi';
 import { RiSurgicalMaskFill } from 'react-icons/ri';
@@ -53,8 +49,6 @@ const LandingPage = () => {
           height: '100%',
           zIndex: '-10',
           marginTop: '-20px',
-          // make only the background image stay in place while scrolling and everything else work like normal
-          //transform: `translateY(${scroll.y}px)`,
         }}
       ></img>
       <NavBar />
@@ -115,8 +109,6 @@ const LandingPage = () => {
           <Text
             component="span"
             align="center"
-            //variant="gradient"
-            //gradient={{ from: '#40c057', to: 'cyan', deg: 45 }}
             size="xl"
             weight={400}
             style={{ fontFamily: 'Greycliff CF, sans-serif' }}
@@ -165,8 +157,6 @@ const LandingPage = () => {
           <Text
             component="span"
             align="center"
-            //variant="gradient"
-            //gradient={{ from: 'cyan', to: '#40c057', deg: 45 }}
             size="xl"
             weight={400}
             style={{ fontFamily: 'Greycliff CF, sans-serif' }}
