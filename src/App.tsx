@@ -13,6 +13,8 @@ import EditPage from './users/components/EditPage';
 import ChangePasswordPage from './users/components/ChangePasswordPage';
 import StripeContainer from './payment/StripeContainer';
 import AuthProvider from './authentication/context/AuthContext';
+import LandingPage from './landingPage/LandingPage';
+import { BackgroundImage } from '@mantine/core';
 
 const queryClient = new QueryClient();
 
@@ -21,15 +23,15 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        {pathname !== '/map' && <NavBar />}
+        {pathname !== '/map' && pathname !== '/' && <NavBar />}
         <Routes>
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<SignupPage />} />
           <Route path="/user">
             <Route path=":id" element={<EditPage />} />
             <Route path="changePassword" element={<ChangePasswordPage />} />
           </Route>
-
           <Route path="/qr/:id" element={<QRPage />} />
           <Route path="/map" element={<PointsMap />} />
           <Route path="/payment" element={<StripeContainer />} />
