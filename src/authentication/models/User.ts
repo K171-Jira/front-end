@@ -11,6 +11,7 @@ export interface IUser {
   password: string;
   token: string;
   balance: number;
+  stripe_id: string;
   role: string;
 }
 

@@ -39,7 +39,6 @@ export default function PaymentForm() {
     if (stripe === null) {
       throw new Error(`BUG: stripe is null`);
     }
-
     if (elements === null) {
       throw new Error(`BUG: stripe elements is null`);
     }
@@ -58,7 +57,6 @@ export default function PaymentForm() {
         const _id = user?._id;
         const balance = user?.balance;
         const response = await axios.post(`${API_URL}/payments`, {
-          amount: 1000,
           id,
           _id,
           balance,
