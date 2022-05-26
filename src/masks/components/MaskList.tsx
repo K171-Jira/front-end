@@ -63,14 +63,12 @@ const MaskList = () => {
       <Container style={{ paddingBottom: '30px', paddingTop: '30px',}} size={270} px="xs">
         <TextInput
           icon={<FiSearch size={25} />}
-          size='lg'
+          size='xl'
           placeholder="Pavadinimas"
           onChange={textQueryHandler} />
       </Container>
 
       <Container style={{ paddingBottom: '30px'}} size={270} px="xs">
-      <Accordion>
-        <Accordion.Item label="Filtras">
         <Card p="lg">
           <form id="create-course-form">
             <TextInput
@@ -140,12 +138,9 @@ const MaskList = () => {
                 { value: MaskType.threeply, label: 'Trisluoksnė' },
                 { value: MaskType.KN95, label: 'KN95' },
               ]}
-              
             />
           </form>
         </Card>
-        </Accordion.Item>
-      </Accordion>
       </Container>
     </div><div>
         {userIsAdmin && (

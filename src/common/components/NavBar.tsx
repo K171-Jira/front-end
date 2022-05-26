@@ -14,6 +14,12 @@ import {
   Center,
   Space,
   Anchor,
+  Image,
+  Popover,
+  Text,
+  Accordion,
+  Title,
+  useMantineTheme,
 } from '@mantine/core';
 import React, { useState } from 'react';
 import { MdOutlineMap, MdOutlineMasks } from 'react-icons/md';
@@ -69,6 +75,7 @@ const NavBar = () => {
               <NavButton to="/masks" color="green" title="Kaukės" icon={<MdOutlineMasks />} />
               <NavButton to="/map" color="green" title="Rūšiavimo taškai" icon={<MdOutlineMap />} />
               <NavButton to="/payment" color="green" title="Mokėjimas" icon={<HiCreditCard />} />
+              <NavButton to="/orders" color="green" title="Užsakymai"/>
               {!user ? (
                 <Group>
                   <NavButton to="/login" color="green" title="Prisijungti" />
@@ -151,6 +158,7 @@ const NavBar = () => {
                   <NavButton to="/masks" color="green" title="Kaukės" icon={<MdOutlineMasks />} />
                   <NavButton to="/map" color="green" title="Rūšiavimo taškai" icon={<MdOutlineMap />} />
                   <NavButton to="/payment" color="green" title="Mokėjimas" icon={<HiCreditCard />} />
+                  <NavButton to="/orders" color="green" title="Užsakymai"/>
                 </Group>
               )}
             </Stack>

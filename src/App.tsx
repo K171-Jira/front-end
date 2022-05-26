@@ -12,6 +12,7 @@ import PointsMap from './map/PointsMap';
 import EditPage from './users/components/EditPage';
 import ChangePasswordPage from './users/components/ChangePasswordPage';
 import StripeContainer from './payment/StripeContainer';
+import OrderPage from './orders/components/OrderPage';
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ function App() {
           <Route path=":id" element={<MaskEdit />} />
           <Route index element={<MaskList />} />
         </Route>
+        <Route path="/orders" element={<OrderPage />} />
       </Routes>
     </QueryClientProvider>
   );
