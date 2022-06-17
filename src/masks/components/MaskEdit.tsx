@@ -16,10 +16,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from '@mantine/form';
 import Mask from '../models/Mask';
 import MaskService from '../services/MaskService';
-import { useMutation, useQuery } from 'react-query';
-import { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useContext, useEffect, useState } from 'react';
 import ConfirmDialog from '../../common/components/ConfirmDialog';
 import { MaskType } from '../models/MaskType';
+import ImageDropzone from './ImageDropzone';
+import { CartContext } from '../../common/context/ShoppingCartContext';
+import { CartContextType } from '../../common/models/CartContext';
 
 const MaskEdit = () => {
   let { id } = useParams();
@@ -29,20 +32,33 @@ const MaskEdit = () => {
   const { isLoading: isMaskLoading, data: mask } = useQuery(['mask', id], MaskService.getMask, {
     enabled: !!id,
   });
+  const [file, setFile] = useState<File | null>(null);
+  const queryClient = useQueryClient();
+  const { maskUpdated } = useContext(CartContext) as CartContextType;
 
   const { mutate: saveMask, isLoading } = useMutation(MaskService.saveMask, {
-    onSuccess: () => {
+    onSuccess: async (mask) => {
+      maskUpdated(new Mask(mask));
+      await queryClient.invalidateQueries('masks');
       navigate('/masks');
     },
     onError: () => {},
   });
 
   const { mutate: deleteProduct, isLoading: isDeleteLoading } = useMutation(MaskService.deleteMask, {
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries('masks');
       navigate('/masks');
     },
     onError: () => {},
   });
+
+  const handleImageAdd = (uploadedFile: File) => {
+    setFile(uploadedFile);
+  };
+  const handleImageRemove = () => {
+    setFile(null);
+  };
 
   const form = useForm<Partial<Mask>>({
     initialValues: {
@@ -77,9 +93,22 @@ const MaskEdit = () => {
               <Loader size="xl" variant="dots" />
             </Center>
           ) : (
-            <form onSubmit={form.onSubmit(() => saveMask(new Mask({ ...form.values, _id: id })))}>
+            <form
+              onSubmit={form.onSubmit(() =>
+                saveMask({
+                  mask: new Mask({ ...form.values, _id: id, imageUrl: mask.imageUrl ?? '' }),
+                  imageFile: file,
+                })
+              )}
+            >
               <Stack spacing="lg">
                 <Title order={2}>{id ? 'Kaukės redagavimas' : 'Nauja kaukė'}</Title>
+                <ImageDropzone
+                  file={file}
+                  savedImageUrl={mask?.imageUrl ?? null}
+                  onImageAdd={handleImageAdd}
+                  onImageRemove={handleImageRemove}
+                />
                 <TextInput
                   variant="default"
                   placeholder="Pavadinimas"

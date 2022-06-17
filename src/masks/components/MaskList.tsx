@@ -39,7 +39,7 @@ const MaskList = () => {
   };
 
   const [filters, setFilters] = useState<Filters>({
-    type: MaskType.threeply,
+    type: null,
     brand: '',
     amount: null,
     priceFloor: null,
@@ -55,9 +55,6 @@ const MaskList = () => {
 
   const navigate = useNavigate();
 
-  // const [minPrice, setMinPrice] = useState(0);
-  // const [maxPrice, setMaxPrice] = useState(100);
-
   const { user } = useContext(AuthContext) as UserContextType;
   const userIsAdmin = user?.role === 'Admin';
   const { isLoading, data: masks } = useQuery(
@@ -66,10 +63,7 @@ const MaskList = () => {
     {
       enabled: true,
 
-      onSuccess: (masks) => {
-        // setMinPrice(Math.min(masks.map((mask: { price: number; }) => mask.price)));
-        // setMaxPrice(Math.max(masks.map((mask: { price: number; }) => mask.price)));
-      },
+      onSuccess: (masks) => {},
     }
   );
 
@@ -106,32 +100,6 @@ const MaskList = () => {
                     onChange={filterHandler}
                   />
                   <Space h="md" />
-
-                  {/* <RangeSlider
-              label='Kaina'
-
-              min={minPrice}
-              max={maxPrice}
-
-              defaultValue={[minPrice, maxPrice]}
-
-              value={[filters.priceFloor, filters.priceCeiling]}
-
-              onChange={(e) => {
-                console.log(
-                setFilters({
-                  ...filters,
-                  priceFloor: e[0],
-                  priceCeiling: e[1]
-                }));
-              }}
-
-              marks = {[
-                { value: minPrice, label: minPrice.toString() },
-                { value: maxPrice, label: maxPrice.toString() },
-              ]}
-
-            /> */}
 
                   <div style={{ display: 'flex' }}>
                     <TextInput

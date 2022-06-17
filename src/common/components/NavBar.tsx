@@ -22,7 +22,8 @@ import { MdOutlineMap, MdOutlineMasks } from 'react-icons/md';
 import { HiQrcode, HiCreditCard } from 'react-icons/hi';
 import { UserContextType } from '../../authentication/models/User';
 import { AuthContext } from '../../authentication/context/AuthContext';
-import { AiFillCaretDown, AiOutlineEdit, AiOutlineCreditCard } from 'react-icons/ai';
+import { AiFillCaretDown, AiOutlineEdit, AiOutlineCreditCard, AiOutlineShoppingCart } from 'react-icons/ai';
+import ShoppingCart from './ShoppingCart';
 
 const NavButton = ({
   to,
@@ -119,7 +120,7 @@ const NavBar = () => {
 
   return (
     <>
-      <Container className={'navigation-bar'} mx="auto" my={20} px={25}>
+      <Container className={'navigation-bar'} mx="auto" my={20} px={20} style={{ maxWidth: '1000px' }}>
         <Card shadow="md" radius="lg" p="md" withBorder>
           <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
             <Group position="apart">
@@ -142,20 +143,8 @@ const NavBar = () => {
                   >
                     QR
                   </Button>
-                  {/*<Anchor component={Link} to={`/user/${user._id}`}>*/}
-                  {/*  {user.email}*/}
-                  {/*</Anchor>*/}
-                  {/*<ActionIcon*/}
-                  {/*  color="green"*/}
-                  {/*  size="lg"*/}
-                  {/*  onClick={() => {*/}
-                  {/*    logout();*/}
-                  {/*    navigate('/');*/}
-                  {/*  }}*/}
-                  {/*>*/}
-                  {/*  <FiLogOut />*/}
-                  {/*</ActionIcon>*/}
                   <NavHoverMenu user={user} logout={logout} />
+                  <ShoppingCart buttonSize={'lg'} />
                 </Group>
               )}
             </Group>
@@ -181,35 +170,29 @@ const NavBar = () => {
                     >
                       QR
                     </Button>
-                    {/*<Anchor component={Link} to={`/user/${user._id}`}>*/}
-                    {/*  {user.email}*/}
-                    {/*</Anchor>*/}
-                    {/*<ActionIcon*/}
-                    {/*  color="green"*/}
-                    {/*  size="lg"*/}
-                    {/*  onClick={() => {*/}
-                    {/*    logout();*/}
-                    {/*    navigate('/');*/}
-                    {/*  }}*/}
-                    {/*>*/}
-                    {/*  <FiLogOut />*/}
-                    {/*</ActionIcon>*/}
                     <NavHoverMenu avatarSize={'sm'} buttonSize={'sm'} user={user} logout={logout} />
+                    <ShoppingCart buttonSize={'md'} />
+                    {opened && (
+                      <Stack>
+                        <NavButton
+                          size={'sm'}
+                          to="/masks"
+                          color="green"
+                          title="Kaukės"
+                          icon={<MdOutlineMasks />}
+                        />
+                        <NavButton
+                          size={'sm'}
+                          to="/map"
+                          color="green"
+                          title="Rūšiavimo taškai"
+                          icon={<MdOutlineMap />}
+                        />
+                      </Stack>
+                    )}
                   </Group>
                 )}
               </Group>
-              {opened && (
-                <Group>
-                  <NavButton size={'sm'} to="/masks" color="green" title="Kaukės" icon={<MdOutlineMasks />} />
-                  <NavButton
-                    size={'sm'}
-                    to="/map"
-                    color="green"
-                    title="Rūšiavimo taškai"
-                    icon={<MdOutlineMap />}
-                  />
-                </Group>
-              )}
             </Stack>
           </MediaQuery>
         </Card>
