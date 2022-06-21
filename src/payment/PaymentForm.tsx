@@ -33,7 +33,7 @@ import { getValue } from '@testing-library/user-event/dist/utils';
 
 export default function PaymentForm() {
   const navigate = useNavigate();
-  const [amount, setValue] = useState(5);
+  const [amount, setValue] = useState(50);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState('');
@@ -99,11 +99,11 @@ export default function PaymentForm() {
             <NumberInput
             style={{ marginTop: 15 }}
             label="Pasirinkite taškų kiekį"
-            description="Vieno taško vertė - 1 euras"
+            description="10 taškų vertė - 1 euras"
             stepHoldDelay={500}
             stepHoldInterval={100}
-            max={25}
-            min={5}
+            max={250}
+            min={50}
             value= {amount}
             onChange={(value) => setValue(Number(value))}
             />
