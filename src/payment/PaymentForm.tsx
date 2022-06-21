@@ -78,6 +78,7 @@ export default function PaymentForm() {
           setSuccess(true);
         } else {
           console.log('Error', response.data);
+		  setText(String(response.data.message));
         }
       } catch (error) {
         console.log('Error', error);
@@ -92,9 +93,7 @@ export default function PaymentForm() {
   return (
     <Container style={{ marginTop: '100px' }}>
       <Card shadow="xl" p="md" sx={{ maxWidth: 400 }} mx="auto" withBorder>
-      
         {!success ? (
-          
           <form className="form">
             <Title order={1}>Apmokėjimas</Title>
             <NumberInput
@@ -132,7 +131,6 @@ export default function PaymentForm() {
         ) : (
           <div>
             <Title order={1}>Sumokėta</Title>
-           
           </div>
         )}
       </Card>
