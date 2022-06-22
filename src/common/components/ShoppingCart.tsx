@@ -17,10 +17,29 @@ import { UserContextType } from '../../authentication/models/User';
 import { CartContext } from '../context/ShoppingCartContext';
 import { CartContextType } from '../models/CartContext';
 import { API_URL } from '../constants';
+import OrderItem from '../../orders/models/OrderItem';
+import { useMutation } from 'react-query';
+import { AuthContext } from '../../authentication/context/AuthContext';
+import Order from '../../orders/models/Order';
+import { OrderService } from '../../orders/services/OrderService';
+
 
 const ShoppingCart = ({ buttonSize }: { buttonSize: MantineSize }) => {
   const [opened, setOpened] = useState(false);
   const { items, removeItem } = useContext(CartContext) as CartContextType;
+
+  const { user } = useContext(AuthContext) as UserContextType;
+
+  var orderItems = items.map(item => new OrderItem(item.mask.id, item.amount, item.price))
+
+  const { mutate, isLoading, error, isError } = useMutation(OrderService.addOrder, {
+    onSuccess:() => {
+      setOpened(false);
+    },
+    onError: () => {},
+  });
+  
+
   return (
     <>
       <Popover
@@ -45,7 +64,7 @@ const ShoppingCart = ({ buttonSize }: { buttonSize: MantineSize }) => {
       >
         <>
           {items.length === 0 ? (
-            <Text size="lg">Kolkas neturite jokių pirkinių</Text>
+            <Text size="lg">Kol kas neturite jokių pirkinių</Text>
           ) : (
             <Stack spacing={8}>
               {items.map((item, index) => (
@@ -94,7 +113,7 @@ const ShoppingCart = ({ buttonSize }: { buttonSize: MantineSize }) => {
                   </Text>
                 </>
               )}
-              <Button variant="light" color="blue" fullWidth onClick={(event: any) => {}}>
+              <Button variant="light" color="blue" fullWidth onClick={() => mutate(new Order({userId: user?._id, items: orderItems }))}>
                 Apmokėjimas
               </Button>
             </Stack>

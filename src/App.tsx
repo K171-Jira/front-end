@@ -16,6 +16,7 @@ import StripeContainer from './payment/StripeContainer';
 import AuthProvider from './authentication/context/AuthContext';
 import CartProvider from './common/context/ShoppingCartContext';
 import LandingPage from './landingPage/LandingPage';
+import OrderHistory from './orders/components/OrderHistory';
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,8 @@ function App() {
                 <Route path=":id" element={<EditPage />} />
                 <Route path="changePassword" element={<ChangePasswordPage />} />
               </Route>
+
+              <Route path="/orderHistory" element={<OrderHistory />} />
 
               <Route path="/qr/:id" element={<QRPage />} />
               <Route path="/map" element={<PointsMap />} />

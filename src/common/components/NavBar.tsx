@@ -90,6 +90,15 @@ const NavHoverMenu = ({ user, logout, buttonSize = 'lg', avatarSize = 'md' }: an
         Papildyti balansą
       </Menu.Item>
       <Menu.Item
+        icon={<AiOutlineCreditCard />}
+        onClick={() => {
+          navigate('/orderHistory');
+        }}
+      >
+        {' '}
+        Užsakymų istorija
+      </Menu.Item>
+      <Menu.Item
         icon={<AiOutlineEdit />}
         onClick={() => {
           navigate(`/user/${user._id}`);
