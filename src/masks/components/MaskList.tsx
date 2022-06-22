@@ -58,7 +58,7 @@ const MaskList = () => {
   const { user } = useContext(AuthContext) as UserContextType;
   const userIsAdmin = user?.role === 'Admin';
   const { isLoading, data: masks } = useQuery(
-    ['masks', new SearchOptions(textQuery, filters)],
+    ['masks', new SearchOptions({textQuery, filters})],
     MaskService.getMasks,
     {
       enabled: true,

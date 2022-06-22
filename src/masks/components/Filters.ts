@@ -7,11 +7,11 @@ export default class Filters {
   priceCeiling: number | null;
   type: MaskType | null;
 
-  constructor(brand: string, amount: number, priceFloor: number, priceCeiling: number, type: MaskType) {
-    this.brand = brand;
-    this.amount = amount;
-    this.priceFloor = priceFloor;
-    this.priceCeiling = priceCeiling;
-    this.type = type;
+  constructor(dto: any = null) {
+    this.brand = dto?.brand??"";
+    this.amount = dto?.amount??null;
+    this.priceFloor = dto?.priceFloor??null;
+    this.priceCeiling = dto?.priceCeiling??null;
+    this.type = dto?.type??null;
   }
 }

@@ -96,7 +96,7 @@ const MaskEdit = () => {
             <form
               onSubmit={form.onSubmit(() =>
                 saveMask({
-                  mask: new Mask({ ...form.values, _id: id, imageUrl: mask.imageUrl ?? '' }),
+                  mask: new Mask({ ...form.values, _id: id, imageUrl: mask?.imageUrl ?? '' }),
                   imageFile: file,
                 })
               )}

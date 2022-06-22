@@ -4,8 +4,8 @@ export default class SearchOptions {
     textQuery: string;
     filters: Filters;
 
-    constructor(textQuery: string, filters: Filters) {
-        this.textQuery = textQuery;
-        this.filters = filters;
+    constructor(dto: any = null) {
+        this.textQuery = dto?.textQuery??"";
+        this.filters = dto?.filters??new Filters();
     }
 } 
